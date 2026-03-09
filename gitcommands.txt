@@ -1,3 +1,5 @@
 git add .
 git commit -m "added git commands"
 git push
+
+these are the commands to be executed after modyfying a git file
