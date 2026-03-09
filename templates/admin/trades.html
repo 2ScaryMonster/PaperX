@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Admin Trades</h2>
+<table class="table" id="admin-trades"><thead><tr><th>Time</th><th>User</th><th>Symbol</th><th>Qty</th><th>Price</th><th>P&L</th><th>Status</th></tr></thead><tbody></tbody></table>
+{% endblock %}
+{% block scripts %}
+<script>
+fetch('/api/admin/trades/').then(r=>r.json()).then(rows=>{
+  const tbody = document.querySelector('#admin-trades tbody');
+  rows.forEach(t=>tbody.innerHTML += `<tr><td>${new Date(t.timestamp).toLocaleString()}</td><td>${t.username}</td><td>${t.symbol}</td><td>${t.quantity}</td><td>${t.price}</td><td>${t.pnl}</td><td>${t.status}</td></tr>`);
+});
+</script>
+{% endblock %}

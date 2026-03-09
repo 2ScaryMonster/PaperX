@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <h3 class="mb-0">Intraday Screener</h3>
+      <div class="d-flex align-items-center gap-2">
+        <span class="text-muted">Results per page</span>
+        <select id="scr-page-size" class="form-select form-select-sm" style="width:90px;">
+          <option value="10">10</option>
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-lg-8">
+        <label class="form-label">Condition Builder</label>
+        <div id="scr-conditions" class="d-grid gap-2"></div>
+        <div class="mt-2 d-flex gap-2">
+          <button id="scr-add-condition" class="btn btn-sm btn-outline-secondary">+ Add Condition</button>
+          <button id="scr-clear-conditions" class="btn btn-sm btn-outline-danger">Clear</button>
+        </div>
+        <label class="form-label mt-3">Generated Query</label>
+        <textarea id="scr-query" class="form-control" rows="5" readonly></textarea>
+        <div class="mt-3 d-flex align-items-center gap-2">
+          <button id="scr-run" class="btn btn-primary">Run This Query</button>
+          <span id="scr-status" class="small text-muted"></span>
+        </div>
+        <div id="scr-progress-wrap" class="progress mt-2 d-none" role="progressbar" aria-label="Screener loading">
+          <div id="scr-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" style="width:0%;"></div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="alert alert-secondary mb-0">
+          <h5 class="mb-2">Custom query example</h5>
+          <div>Market Capitalization &gt; 5000000000 AND</div>
+          <div>Price to Earning &lt; 15 AND</div>
+          <div>Current price &gt; DMA 50</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-sm align-middle" id="scr-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company</th>
+            <th role="button" data-sort-key="sector">Sector <span class="text-muted" data-sort-indicator="sector"></span></th>
+            <th role="button" data-sort-key="current_price">Current Price <span class="text-muted" data-sort-indicator="current_price"></span></th>
+            <th role="button" data-sort-key="pe">P/E <span class="text-muted" data-sort-indicator="pe"></span></th>
+            <th role="button" data-sort-key="market_cap">Market Cap <span class="text-muted" data-sort-indicator="market_cap"></span></th>
+            <th role="button" data-sort-key="volume">Volume <span class="text-muted" data-sort-indicator="volume"></span></th>
+            <th role="button" data-sort-key="from_52w_high">From 52W High <span class="text-muted" data-sort-indicator="from_52w_high"></span></th>
+            <th role="button" data-sort-key="dma50">DMA 50 <span class="text-muted" data-sort-indicator="dma50"></span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mt-2">
+      <div id="scr-page-info" class="text-muted small">0 results</div>
+      <div class="btn-group btn-group-sm">
+        <button class="btn btn-outline-secondary" id="scr-prev">Prev</button>
+        <button class="btn btn-outline-secondary" id="scr-next">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/screener.js?v=20260308h"></script>{% endblock %}

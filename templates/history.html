@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Trade History</h2>
+<table class="table table-striped" id="history-table"><thead><tr><th>Time</th><th>Symbol</th><th>Exchange</th><th>Type</th><th>Action</th><th>Qty</th><th>Price</th><th>Status</th><th>P&L</th></tr></thead><tbody></tbody></table>
+{% endblock %}
+{% block scripts %}
+<script>
+fetch('/api/trade/history/').then(r=>r.json()).then(rows=>{
+  const tbody = document.querySelector('#history-table tbody');
+  tbody.innerHTML='';
+  rows.forEach(t=>{
+    tbody.innerHTML += `<tr><td>${new Date(t.timestamp).toLocaleString()}</td><td>${t.symbol}</td><td>${t.exchange}</td><td>${t.order_type}</td><td>${t.action}</td><td>${t.quantity}</td><td>${t.price}</td><td>${t.status}</td><td>${t.pnl}</td></tr>`;
+  });
+});
+</script>
+{% endblock %}

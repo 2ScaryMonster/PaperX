@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex flex-wrap gap-2 align-items-end mb-3">
+      <div>
+        <label class="form-label mb-1">Symbol</label>
+        <input id="orders-symbol" class="form-control" placeholder="RELIANCE / TCS.NS">
+      </div>
+      <div>
+        <label class="form-label mb-1">Action</label>
+        <select id="orders-action" class="form-select">
+          <option value="">All</option>
+          <option value="buy">Buy</option>
+          <option value="sell">Sell</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label mb-1">Status</label>
+        <select id="orders-status" class="form-select">
+          <option value="">All</option>
+          <option value="executed">Executed</option>
+          <option value="pending">Pending</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+      <div>
+        <button id="orders-refresh" class="btn btn-outline-primary">Refresh</button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-sm table-striped align-middle" id="orders-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Symbol</th>
+            <th>Exchange</th>
+            <th>Type</th>
+            <th>Action</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Limit</th>
+            <th>Stop Loss</th>
+            <th>Status</th>
+            <th>P&amp;L</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/orders.js?v=20260304c"></script>{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Admin Users</h2>
+<table class="table" id="admin-users"><thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Balance</th><th>Active</th><th>Created</th></tr></thead><tbody></tbody></table>
+{% endblock %}
+{% block scripts %}
+<script>
+fetch('/api/admin/users/').then(r=>r.json()).then(rows=>{
+  const tbody = document.querySelector('#admin-users tbody');
+  rows.forEach(u=>tbody.innerHTML += `<tr><td>${u.id}</td><td>${u.username}</td><td>${u.email}</td><td>${u.balance}</td><td>${u.is_active}</td><td>${new Date(u.created_at).toLocaleString()}</td></tr>`);
+});
+</script>
+{% endblock %}

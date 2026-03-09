@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Leaderboard</h2>
+<select id="sort" class="form-select w-auto mb-3">
+  <option value="total_profit">Total Profit</option>
+  <option value="return_pct">Return %</option>
+  <option value="trade_count">Trade Count</option>
+  <option value="current_balance">Current Balance</option>
+</select>
+<table class="table" id="leaderboard"><thead><tr><th>User</th><th>Profit</th><th>Return %</th><th>Trades</th><th>Balance</th></tr></thead><tbody></tbody></table>
+{% endblock %}
+{% block scripts %}
+<script>
+function loadBoard() {
+  const sort = document.getElementById('sort').value;
+  fetch(`/api/admin/leaderboard/?sort=${sort}`).then(r=>r.json()).then(rows=>{
+    const tbody = document.querySelector('#leaderboard tbody');
+    tbody.innerHTML='';
+    rows.forEach(x=>tbody.innerHTML += `<tr><td>${x.username}</td><td>${x.total_profit}</td><td>${x.return_pct}</td><td>${x.trade_count}</td><td>${x.current_balance}</td></tr>`);
+  });
+}
+document.getElementById('sort').addEventListener('change', loadBoard);
+loadBoard();
+</script>
+{% endblock %}

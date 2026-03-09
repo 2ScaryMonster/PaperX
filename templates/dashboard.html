@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% block main_class %}dashboard-main{% endblock %}
+{% block content %}
+<div class="kite-shell">
+  <aside class="kite-left">
+    <div class="kite-search-wrap kite-search-row">
+      <span class="kite-search-icon">⌕</span>
+      <input id="watch-search" class="form-control kite-watch-search-input" placeholder="Search eg: infy bse, nifty fut, index fund, etc">
+      <span class="kite-search-kbd">Ctrl + K</span>
+      <button id="watch-filter-btn" class="kite-filter-btn" type="button">☷</button>
+    </div>
+    <div id="watch-search-results" class="kite-search-results"></div>
+    <div class="kite-watch-meta">
+      <div id="watch-meta-title">Watchlist 1 (0 / 250)</div>
+      <button id="new-group-btn" type="button" class="kite-link-btn">+ New group</button>
+    </div>
+    <div class="kite-watch-card">
+      <div class="kite-watch-header">
+        <div class="kite-watch-header-row">
+          <div id="watch-group-name">Default (0)</div>
+          <div class="kite-watch-header-actions">
+            <button id="rename-watchlist-btn" class="kite-header-icon-btn" title="Rename watchlist" type="button">✎</button>
+            <button id="delete-watchlist-btn" class="kite-header-icon-btn danger" title="Delete watchlist" type="button">🗑</button>
+          </div>
+        </div>
+      </div>
+      <div id="watchlist-panel" class="kite-watchlist"></div>
+    </div>
+    <div id="watch-tabs" class="kite-watch-tabs"></div>
+  </aside>
+
+  <section class="kite-right">
+    <div class="kite-banner">Paper trading dashboard: equity-only view is active.</div>
+    <h1 class="kite-greeting">Hi, {{ user.username }}</h1>
+
+    <div class="kite-equity-card">
+      <h3>Equity</h3>
+      <div class="kite-equity-grid">
+        <div>
+          <div class="kite-big" id="balance">-</div>
+          <div class="text-muted">Margin available</div>
+        </div>
+        <div>
+          <div class="kite-stat-line">Portfolio value <strong id="portfolio-value">-</strong></div>
+          <div class="kite-stat-line">Open positions <strong id="open-positions">-</strong></div>
+          <div class="kite-stat-line">Net P&L <strong id="pnl">-</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kite-holdings-card" id="holdings-section">
+      <h3>Holdings</h3>
+      <div class="kite-holdings-row">
+        <div class="kite-big-sm" id="pnl-large">-</div>
+        <div class="kite-mini-grid">
+          <div>Current value <strong id="portfolio-value-2">-</strong></div>
+          <div>Balance <strong id="balance-2">-</strong></div>
+        </div>
+      </div>
+      <table class="table table-sm mt-3" id="holdings-table">
+        <thead><tr><th>Symbol</th><th>Qty</th><th>Avg</th><th>Current</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="kite-holdings-card">
+      <h3>Recent Trades</h3>
+      <table class="table table-sm" id="recent-trades">
+        <thead><tr><th>Time</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Price</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div class="modal fade" id="orderTicketModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered kite-order-dialog">
+    <div class="modal-content kite-order-modal" id="order-ticket-card">
+      <div class="kite-order-head">
+        <div class="kite-order-symbol" id="ot-symbol">-</div>
+        <div class="kite-order-prices">
+          <label><input type="radio" name="ot-exchange" value="BSE"> BSE <span id="ot-bse-price">-</span></label>
+          <label><input type="radio" name="ot-exchange" value="NSE" checked> NSE <span id="ot-nse-price">-</span></label>
+        </div>
+      </div>
+      <div class="kite-order-tabs">
+        <button type="button" class="kite-order-tab active" data-order-mode="quick">Quick</button>
+        <button type="button" class="kite-order-tab" data-order-mode="regular">Regular</button>
+      </div>
+      <div class="kite-order-body" id="ot-quick-body">
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <label class="form-label">Qty.</label>
+            <input id="ot-qty" type="number" min="1" value="1" class="form-control">
+          </div>
+          <div class="col-6">
+            <label class="form-label">Price</label>
+            <input id="ot-price" type="number" step="0.01" class="form-control">
+          </div>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="ot-intraday">
+              <label class="form-check-label" for="ot-intraday">Intraday</label>
+            </div>
+          </div>
+          <div class="col-6 text-end">
+            <small class="text-muted">Order type: Market</small>
+          </div>
+        </div>
+      </div>
+      <div class="kite-order-body d-none" id="ot-regular-body">
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <label class="form-label">Qty.</label>
+            <input id="ot-qty-regular" type="number" min="1" value="1" class="form-control">
+          </div>
+          <div class="col-6">
+            <label class="form-label">Price</label>
+            <input id="ot-price-regular" type="number" step="0.01" class="form-control">
+          </div>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <label class="form-label">Order Type</label>
+            <select id="ot-order-type" class="form-select">
+              <option value="market">Market</option>
+              <option value="limit">Limit</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label class="form-label">SL Mode</label>
+            <select id="ot-sl-mode" class="form-select">
+              <option value="sl">SL</option>
+              <option value="slm">SL-M</option>
+            </select>
+          </div>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6">
+            <div class="form-check mt-4">
+              <input class="form-check-input" type="checkbox" id="ot-use-stoploss">
+              <label class="form-check-label" for="ot-use-stoploss">Use Stop Loss Trigger</label>
+            </div>
+          </div>
+          <div class="col-6">
+            <label class="form-label">Trigger Price</label>
+            <input id="ot-trigger-price" type="number" step="0.01" class="form-control" placeholder="e.g. 162.50" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="kite-order-foot">
+        <div class="mb-2">Req. <span id="ot-req">-</span> &nbsp; Avail. <span id="ot-avail">-</span></div>
+        <div class="d-flex gap-2">
+          <button id="ot-submit-btn" class="btn flex-fill">Submit</button>
+          <button id="ot-cancel-btn" class="btn btn-outline-secondary flex-fill" data-bs-dismiss="modal">Cancel</button>
+        </div>
+        <div id="ot-status" class="small mt-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="marketDepthModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Market Depth - <span id="depth-symbol">-</span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="small text-muted mb-2">LTP: <span id="depth-ltp">-</span></div>
+        <table class="table table-sm mb-0">
+          <thead>
+            <tr>
+              <th class="text-success">Bid Qty</th>
+              <th class="text-success">Bid Price</th>
+              <th class="text-danger">Ask Price</th>
+              <th class="text-danger">Ask Qty</th>
+            </tr>
+          </thead>
+          <tbody id="depth-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/dashboard.js?v=20260308b"></script>{% endblock %}

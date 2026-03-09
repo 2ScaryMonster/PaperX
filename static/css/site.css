@@ -1,0 +1,710 @@
+body { background: #f8fafc; }
+.card { border-radius: 0.75rem; }
+#price-chart { border: 1px solid #e6e6e6; border-radius: 10px; background: #fff; }
+.analysis-price-chart { height: 680px; }
+
+@media (max-width: 992px) {
+  .analysis-price-chart { height: 520px; }
+}
+
+.dashboard-main {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.kite-shell {
+  display: flex;
+  min-height: calc(100vh - 56px);
+  background: #f4f6f8;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.kite-left {
+  width: 360px;
+  border-right: 1px solid #dde1e6;
+  background: #fff;
+}
+
+.kite-right {
+  flex: 1;
+  padding: 18px 28px 32px;
+}
+
+.kite-search-wrap {
+  padding: 14px;
+  border-bottom: 1px solid #eef1f4;
+}
+
+.kite-search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kite-search-icon {
+  color: #97a1ad;
+  font-size: 18px;
+}
+
+.kite-watch-search-input {
+  border: 0;
+  box-shadow: none !important;
+  background: #fff;
+  color: #5f6d7c;
+}
+
+.kite-search-kbd {
+  border: 1px solid #e2e6ea;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #8f98a4;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.kite-filter-btn {
+  border: 0;
+  background: transparent;
+  color: #8f98a4;
+  font-size: 16px;
+}
+
+.kite-search-results {
+  border-bottom: 1px solid #eef1f4;
+  background: #fff;
+  max-height: 270px;
+  overflow-y: auto;
+}
+
+.kite-search-row-item {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #f1f3f5;
+  background: #fff;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+}
+
+.kite-search-row-item:hover {
+  background: #f7fbff;
+}
+
+.kite-search-symbol {
+  font-size: 13px;
+  font-weight: 600;
+  color: #273749;
+}
+
+.kite-search-name {
+  font-size: 12px;
+  color: #8c98a4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 210px;
+}
+
+.kite-search-exchange {
+  font-size: 12px;
+  color: #6f7c89;
+}
+
+.kite-search-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kite-search-actions {
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.kite-search-row-item:hover .kite-search-exchange {
+  display: none;
+}
+
+.kite-search-row-item:hover .kite-search-actions {
+  display: flex;
+}
+
+.kite-search-empty {
+  padding: 10px 14px;
+  color: #8b97a3;
+  font-size: 13px;
+}
+
+.kite-watch-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  color: #727f8d;
+}
+
+.kite-link-btn {
+  border: 0;
+  background: transparent;
+  color: #3a76e7;
+  font-size: 14px;
+}
+
+.kite-watch-card {
+  margin: 0 10px;
+  border: 1px solid #e8ecf0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.kite-watch-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid #eef1f4;
+  color: #5f6c7b;
+}
+
+.kite-watch-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.kite-watch-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kite-header-icon-btn {
+  border: 0;
+  background: transparent;
+  color: #7f8b98;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.kite-header-icon-btn:hover {
+  background: #f1f4f7;
+  color: #3b4858;
+}
+
+.kite-header-icon-btn.danger:hover {
+  background: #fff1ee;
+  color: #d94721;
+}
+
+.kite-watch-header > div {
+  color: #1f2d3d;
+  font-weight: 600;
+}
+
+.kite-watchlist {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+}
+
+.kite-watch-row {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) 1fr;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1f3f5;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.kite-watch-row:hover {
+  background: #f9fbfd;
+}
+
+.kite-watch-metrics {
+  display: grid;
+  grid-template-columns: 52px 62px 24px 70px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.kite-watch-actions {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.kite-watch-row:hover .kite-watch-metrics {
+  display: none;
+}
+
+.kite-watch-row:hover .kite-watch-actions {
+  display: flex;
+}
+
+.kite-act {
+  border: 1px solid #d8e0e8;
+  background: #fff;
+  color: #596779;
+  min-width: 34px;
+  height: 30px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.kite-act:hover {
+  background: #f2f6fa;
+}
+
+.kite-act-buy {
+  background: #3a7cec;
+  border-color: #3a7cec;
+  color: #fff;
+}
+
+.kite-act-sell {
+  background: #ff5a24;
+  border-color: #ff5a24;
+  color: #fff;
+}
+
+.kite-watch-symbol {
+  font-weight: 500;
+  color: #263445;
+}
+
+.kite-watch-ltp {
+  font-weight: 500;
+  color: #3f4f5f;
+  text-align: right;
+}
+
+.kite-watch-empty {
+  color: #8a96a3;
+  padding: 16px 14px;
+}
+
+.kite-watch-change,
+.kite-watch-pct,
+.kite-watch-dot {
+  color: #8f98a4;
+  text-align: right;
+  font-size: 14px;
+}
+
+.kite-watch-row.is-up .kite-watch-change,
+.kite-watch-row.is-up .kite-watch-pct,
+.kite-watch-row.is-up .kite-watch-ltp {
+  color: #138a48;
+}
+
+.kite-watch-row.is-down .kite-watch-change,
+.kite-watch-row.is-down .kite-watch-pct,
+.kite-watch-row.is-down .kite-watch-ltp {
+  color: #d7462f;
+}
+
+.kite-watch-dot {
+  text-align: center;
+}
+
+.kite-exch {
+  font-size: 11px;
+  color: #9aa3ae;
+  margin-left: 4px;
+}
+
+.kite-watch-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-top: 1px solid #eef1f4;
+  color: #8f98a4;
+}
+
+.kite-tab {
+  border: 0;
+  background: transparent;
+  color: #808a97;
+  min-width: 22px;
+  padding: 0 0 6px;
+  border-bottom: 2px solid transparent;
+}
+
+.kite-tab.active {
+  color: #f05a28;
+  border-bottom-color: #f05a28;
+}
+
+.kite-tab-plus {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: #4f5d6d;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.kite-banner {
+  background: #fff8e5;
+  border: 1px solid #efdfb4;
+  color: #5f5640;
+  padding: 10px 12px;
+  border-radius: 4px;
+  margin-bottom: 18px;
+}
+
+.kite-greeting {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  color: #263445;
+}
+
+.kite-equity-card,
+.kite-holdings-card {
+  background: #fff;
+  border: 1px solid #e8ecf0;
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+
+.kite-equity-card h3,
+.kite-holdings-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3a4b;
+  margin-bottom: 10px;
+}
+
+.kite-equity-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+}
+
+.kite-big {
+  font-size: 42px;
+  line-height: 1;
+  color: #2f3d4d;
+}
+
+.kite-big-sm {
+  font-size: 34px;
+  line-height: 1;
+  color: #f05a28;
+}
+
+.kite-stat-line {
+  font-size: 15px;
+}
+
+.kite-mini-grid {
+  font-size: 15px;
+}
+
+.kite-watch-header > div {
+  font-size: 16px;
+}
+
+.kite-watch-header small {
+  font-size: 13px;
+}
+
+.kite-watch-symbol,
+.kite-watch-ltp {
+  font-size: 15px;
+}
+
+.kite-stat-line {
+  margin-bottom: 8px;
+  color: #7b8895;
+}
+
+.kite-stat-line strong {
+  color: #354252;
+  margin-left: 8px;
+}
+
+.kite-holdings-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.kite-mini-grid {
+  display: grid;
+  gap: 8px;
+  color: #7b8895;
+}
+
+.kite-mini-grid strong {
+  color: #344454;
+  margin-left: 8px;
+}
+
+.holdings-symbol-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.holdings-actions {
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.holdings-row:hover .holdings-actions {
+  display: inline-flex;
+}
+
+@media (max-width: 992px) {
+  .kite-shell {
+    flex-direction: column;
+  }
+
+  .kite-left {
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid #dde1e6;
+  }
+
+  .kite-right {
+    padding: 14px;
+  }
+
+  .kite-equity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kite-holdings-row {
+    flex-direction: column;
+  }
+}
+
+.order-ticket {
+  border: 1px solid #dbe2eb;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.ticket-head {
+  padding: 14px 16px;
+  color: #fff;
+}
+
+.order-ticket.buy-mode .ticket-head {
+  background: #4a86e8;
+}
+
+.order-ticket.sell-mode .ticket-head {
+  background: #ff5a24;
+}
+
+.ticket-symbol {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.ticket-prices {
+  display: flex;
+  gap: 18px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.ticket-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid #e6ebf0;
+  background: #f6f7f9;
+}
+
+.ticket-tabs span {
+  text-align: center;
+  padding: 8px 4px;
+  color: #9aa4af;
+  font-size: 24px;
+}
+
+.ticket-tabs span.active {
+  color: #3e6ed2;
+  border-bottom: 2px solid #3e6ed2;
+}
+
+.ticket-body,
+.ticket-foot {
+  padding: 14px 16px;
+}
+
+.ticket-body label {
+  font-size: 24px;
+  color: #7f8a96;
+}
+
+.ticket-body .form-control {
+  font-size: 44px;
+  height: auto;
+}
+
+.ticket-foot {
+  border-top: 1px solid #eef2f6;
+}
+
+.ticket-foot > div:first-child {
+  font-size: 28px;
+  color: #6e7b88;
+}
+
+.ticket-foot > div:first-child span {
+  color: #3971d6;
+}
+
+.ticket-buy-btn,
+.ticket-sell-btn {
+  color: #fff;
+  font-size: 38px;
+  font-weight: 600;
+  border: 0;
+  padding: 10px 12px;
+}
+
+.ticket-buy-btn {
+  background: #4a86e8;
+}
+
+.ticket-sell-btn {
+  background: #ff5a24;
+}
+
+.kite-order-modal {
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  resize: both;
+  min-width: 360px;
+  min-height: 430px;
+  max-width: 92vw;
+}
+
+.kite-order-dialog {
+  width: min(520px, 92vw);
+  max-width: 92vw;
+}
+
+.kite-order-head {
+  color: #fff;
+  padding: 10px 12px;
+  cursor: move;
+  user-select: none;
+}
+
+.kite-order-modal.buy-mode .kite-order-head {
+  background: #4a86e8;
+}
+
+.kite-order-modal.sell-mode .kite-order-head {
+  background: #ff5a24;
+}
+
+.kite-order-symbol {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.kite-order-prices {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 18px;
+}
+
+.kite-order-prices label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.kite-order-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-bottom: 1px solid #e6ebf0;
+  background: #f6f7f9;
+}
+
+.kite-order-tab {
+  border: 0;
+  background: transparent;
+  text-align: center;
+  padding: 7px 4px;
+  color: #9aa4af;
+  font-size: 14px;
+}
+
+.kite-order-tab.active {
+  color: #3e6ed2;
+  border-bottom: 2px solid #3e6ed2;
+}
+
+.kite-order-body,
+.kite-order-foot {
+  padding: 10px 12px;
+}
+
+.kite-order-body .form-label {
+  font-size: 14px;
+  color: #7f8a96;
+  margin-bottom: 4px;
+}
+
+.kite-order-body .form-control {
+  font-size: 18px;
+  line-height: 1.2;
+  height: 44px;
+}
+
+.kite-order-foot {
+  border-top: 1px solid #eef2f6;
+}
+
+.kite-order-foot > div:first-child {
+  font-size: 18px;
+  color: #6e7b88;
+}
+
+.kite-order-foot > div:first-child span {
+  color: #3971d6;
+}
+
+#ot-submit-btn {
+  color: #fff;
+  border: 0;
+  font-size: 34px;
+  font-weight: 600;
+  min-height: 46px;
+}
+
+.kite-order-modal.buy-mode #ot-submit-btn {
+  background: #4a86e8;
+}
+
+.kite-order-modal.sell-mode #ot-submit-btn {
+  background: #ff5a24;
+}

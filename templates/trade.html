@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Trade</h2>
+<form id="trade-form" class="row g-3" autocomplete="off">
+  <div class="col-md-3"><label class="form-label">Symbol</label><input class="form-control" name="symbol" value="RELIANCE.NS" required autocomplete="off"></div>
+  <div class="col-md-2"><label class="form-label">Exchange</label><select class="form-select" name="exchange"><option>NSE</option><option>BSE</option><option>CRYPTO</option></select></div>
+  <div class="col-md-2"><label class="form-label">Order Type</label><select class="form-select" name="order_type"><option value="market">Market</option><option value="limit">Limit</option></select></div>
+  <div class="col-md-2"><label class="form-label">Action</label><select class="form-select" name="action"><option value="buy">Buy</option><option value="sell">Sell</option></select></div>
+  <div class="col-md-1"><label class="form-label">Qty</label><input type="number" class="form-control" name="quantity" min="1" value="1" required autocomplete="off"></div>
+  <div class="col-md-2"><label class="form-label">Limit Price</label><input type="number" step="0.01" class="form-control" name="limit_price" autocomplete="off"></div>
+  <div class="col-md-2"><label class="form-label">Stop Loss</label><input type="number" step="0.01" class="form-control" name="stop_loss" autocomplete="off"></div>
+  <div class="col-md-2"><label class="form-label">Live Price</label><div id="live-price" class="form-control">-</div></div>
+  <div class="col-md-12"><button class="btn btn-primary" type="submit">Execute</button></div>
+</form>
+<div class="mt-3" id="trade-status"></div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+      <div>
+        <h4 id="graph-symbol" class="mb-1">RELIANCE.NS</h4>
+        <div>
+          <span id="graph-price" class="fs-2 fw-semibold">-</span>
+          <span class="ms-1">₹</span>
+        </div>
+        <div id="graph-change" class="fw-semibold"></div>
+      </div>
+      <div id="range-buttons" class="btn-group btn-group-sm" role="group" aria-label="Range selector">
+        <button type="button" class="btn btn-outline-secondary active" data-range="1d">1D</button>
+        <button type="button" class="btn btn-outline-secondary" data-range="5d">5D</button>
+        <button type="button" class="btn btn-outline-secondary" data-range="1mo">1M</button>
+        <button type="button" class="btn btn-outline-secondary" data-range="6mo">6M</button>
+        <button type="button" class="btn btn-outline-secondary" data-range="ytd">YTD</button>
+        <button type="button" class="btn btn-outline-secondary" data-range="1y">1Y</button>
+        <button type="button" class="btn btn-outline-secondary" data-range="5y">5Y</button>
+        <button type="button" class="btn btn-outline-secondary" data-range="max">MAX</button>
+      </div>
+    </div>
+    <canvas id="trade-chart" height="110"></canvas>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/trade.js?v=20260308a"></script>{% endblock %}

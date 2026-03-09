@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Trading Bot (Paper Only)</h4>
+      <span id="bot-state" class="badge text-bg-secondary">Stopped</span>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-4">
+        <label class="form-label">Bot Profile</label>
+        <select id="bot-profile-select" class="form-select"></select>
+      </div>
+      <div class="col-md-8 d-flex align-items-end gap-2">
+        <button id="bot-profile-create" class="btn btn-outline-primary" type="button">Create Profile</button>
+        <button id="bot-profile-delete" class="btn btn-outline-danger" type="button">Delete Profile</button>
+      </div>
+    </div>
+    <div class="row g-2 mt-2">
+      <div class="col-md-3">
+        <label class="form-label">Strategy</label>
+        <select id="bot-strategy" class="form-select">
+          <option value="">Select strategy</option>
+          <option value="ema_cross">EMA Cross (15m)</option>
+          <option value="trend_pullback">Trend Pullback (Swing)</option>
+          <option value="ai_custom">AI Custom Strategy</option>
+        </select>
+      </div>
+      <div class="col-md-5 position-relative">
+        <label class="form-label">Symbols</label>
+        <input id="bot-symbol-search" class="form-control" placeholder="Search and add symbols (e.g. TCS, INFY)">
+        <div id="bot-symbol-results" class="list-group position-absolute w-100 mt-1 shadow-sm" style="z-index:40;"></div>
+        <div id="bot-symbol-chips" class="d-flex flex-wrap gap-2 mt-2"></div>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Order Qty</label>
+        <input id="bot-qty" type="number" min="1" class="form-control" value="1">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Poll Seconds</label>
+        <input id="bot-poll" type="number" min="20" max="300" class="form-control" value="60">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Max Daily Loss (₹)</label>
+        <input id="bot-max-loss" type="number" min="1" class="form-control" value="500">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Max Open Positions</label>
+        <input id="bot-max-pos" type="number" min="1" class="form-control" value="5">
+      </div>
+      <div class="col-md-6 d-flex align-items-end gap-2">
+        <button id="bot-save" class="btn btn-outline-primary">Save Config</button>
+        <button id="bot-start" class="btn btn-success">Start Bot</button>
+        <button id="bot-pause" class="btn btn-warning">Pause Bot</button>
+        <button id="bot-resume" class="btn btn-info">Resume Bot</button>
+        <button id="bot-stop" class="btn btn-danger">Stop Bot</button>
+        <button id="bot-delete" class="btn btn-outline-danger">Delete Strategy/Bot</button>
+      </div>
+      <div class="col-12" id="bot-custom-prompt-wrap" style="display:none;">
+        <label class="form-label">AI Strategy Prompt</label>
+        <textarea id="bot-custom-prompt" class="form-control" rows="6" placeholder="Paste full strategy/system prompt here. The bot will evaluate BUY/WAIT/REJECT each cycle using this prompt."></textarea>
+      </div>
+    </div>
+    <div id="bot-status" class="small text-muted mt-2"></div>
+    <div id="bot-last-status" class="small text-muted"></div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="mb-2">Bot Assistant</h5>
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <div id="bot-chat-provider" class="small text-muted">AI provider: local parser</div>
+      <span id="bot-ollama-badge" class="badge text-bg-secondary">Ollama: checking...</span>
+      <button id="bot-ollama-check" class="btn btn-sm btn-outline-secondary" type="button">Check Now</button>
+    </div>
+    <div id="bot-chat-log" class="border rounded p-2 mb-2" style="height:220px;overflow:auto;background:#fafafa;"></div>
+    <div class="input-group">
+      <input id="bot-chat-input" class="form-control" placeholder='Try: "add symbol tcs", "set qty 2", "start bot"'>
+      <button id="bot-chat-send" class="btn btn-primary" type="button">Send</button>
+    </div>
+    <div id="bot-chat-loading" class="small text-muted mt-1 d-none">Bot is thinking...</div>
+    <div class="small text-muted mt-1">Commands: help, add/remove symbol, set qty/poll/loss/max positions, select strategy, save, start, pause, resume, stop, show config. AI Custom auto-picks NSE/BSE symbols only when no symbols are provided and prompt does not specify symbols.</div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="mb-2">Strategy Catalog</h5>
+    <div class="table-responsive">
+      <table class="table table-sm mb-0">
+        <thead>
+          <tr>
+            <th>Strategy</th>
+            <th>Type</th>
+            <th>Timeframe</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="bot-strategy-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="mb-2">Bot Activity</h5>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead><tr><th>Time</th><th>Level</th><th>Symbol</th><th>Action</th><th>Message</th></tr></thead>
+        <tbody id="bot-log-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/bot.js?v=20260309g"></script>{% endblock %}

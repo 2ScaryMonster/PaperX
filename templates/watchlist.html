@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Watchlists</h2>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label">Select Watchlist</label>
+        <select id="watchlist-select" class="form-select"></select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">New Watchlist Name</label>
+        <input id="new-watchlist-name" class="form-control" placeholder="Swing Picks">
+      </div>
+      <div class="col-md-2 d-grid">
+        <button id="create-watchlist" class="btn btn-success">Create</button>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Rename Selected</label>
+        <div class="input-group">
+          <input id="rename-watchlist-name" class="form-control" placeholder="New name">
+          <button id="rename-watchlist" class="btn btn-outline-primary">Rename</button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2">
+      <button id="delete-watchlist" class="btn btn-outline-danger btn-sm">Delete Selected Watchlist</button>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label">Add Symbol</label>
+        <input id="watch-symbol" class="form-control" placeholder="RELIANCE.NS / BTC-USD">
+      </div>
+      <div class="col-md-2 d-grid">
+        <button id="add-watch" class="btn btn-primary">Add Symbol</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="watchlist-status" class="mb-2"></div>
+<table class="table" id="watch-table">
+  <thead><tr><th>Symbol</th><th>Last Traded Price (Live)</th><th>Added At</th><th>Action</th></tr></thead>
+  <tbody></tbody>
+</table>
+{% endblock %}
+{% block scripts %}<script src="/static/js/watchlist.js"></script>{% endblock %}
